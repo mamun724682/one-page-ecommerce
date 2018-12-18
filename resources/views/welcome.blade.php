@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <a href="{{ route('welcome') }}"><link rel="shortcut icon" href="{{ asset('frontend/images/star.png') }}" type="favicon/ico" /></a>
 
-    <title>Mamma's Kitchen</title>
+    <title>Mamun's Kitchen</title>
 
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/flexslider.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/pricing.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap-datetimepicker.min.css') }}">
+     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
     <style type="text/css">
         @foreach ($sliders as $key => $slider)
@@ -629,7 +631,9 @@
                         <div class=" section-content">
                             <div class="row">
                                 <div class="col-md-5 col-sm-6">
-                                    <form class="reservation-form" method="post" action="reserve.php">
+                                    <form class="reservation-form" method="post" action="{{ route('reservation.reserve') }}">
+                                        @csrf
+                                        
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="form-group">
@@ -645,7 +649,7 @@
                                                     <input type="tel" class="form-control reserve-form empty iconified" name="phone" id="phone" required="required" placeholder="  &#xf095;  Phone">
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control reserve-form empty iconified" name="datepicker" id="datepicker" required="required" placeholder="&#xf017;  Time">
+                                                    <input type="text" class="form-control reserve-form empty iconified" name="dateandtime" id="datepicker" required="required" placeholder="&#xf017;  Time">
                                                 </div>
                                             </div>
 
@@ -790,7 +794,20 @@
         <script type="text/javascript" src="{{ asset('frontend/js/jquery.hoverdir.js') }}"></script>
         <script type="text/javascript" src="{{ asset('frontend/js/jQuery.scrollSpeed.js') }}"></script>
         <script src="{{ asset('frontend/js/script.js') }}"></script>
-        
+        <script src="{{ asset('frontend/js/bootstrap-datetimepicker.min.js') }}"></script>
+        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('#datepicker').datetimepicker({
+                    format: 'dd MM yyyy HH:ii P',
+                    showMeridian: true,
+                    autoclose: true,
+                    todayBtn: true
+                });
+            })
+        </script>
+
+        {!! Toastr::message() !!}
 
     </body>
     </html>
