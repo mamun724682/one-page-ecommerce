@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\Slider;
+use App\Contact;
 use App\Category;
 use App\Reservation;
 use Illuminate\Http\Request;
@@ -43,6 +44,27 @@ class HomeController extends Controller
         $reserve->save();
 
         Toastr::success('Reservation request sent, We will confirm to you asaf', 'success', ["positionClass" => "toast-top-right"]);
+
+        return redirect()->back();
+    }
+
+    public function contact(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+
+        $contact = new Contact;
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->subject = $request->subject;
+        $contact->message = $request->message;
+        $contact->save();
+
+        Toastr::success('Sent your message to admin :)', 'success', ["positionClass" => "toast-top-right"]);
 
         return redirect()->back();
     }
