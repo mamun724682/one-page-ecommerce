@@ -6,6 +6,8 @@ use App\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use App\Notifications\ReservationConfirmed;
+use Illuminate\Support\Facades\Notification;
 
 class ReservationController extends Controller
 {
@@ -20,6 +22,9 @@ class ReservationController extends Controller
     	$reserve = Reservation::find($id);
     	$reserve->status = true;
     	$reserve->save();
+
+        Notification::route('mail', $reserve->email)
+            ->notify(new ReservationConfirmed());
 
     	Toastr::success('Reservation request Acceptd', 'success', ["positionClass" => "toast-top-right"]);
 
